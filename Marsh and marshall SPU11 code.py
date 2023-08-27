@@ -22,7 +22,7 @@ from matplotlib.collections import LineCollection
 import math
 
 def load_file_and_return_data_array(filename,time_interval, cols_to_use):
-    """This does wht is says"""
+    """This does what it says"""
     data = np.loadtxt(filename, dtype = float, skiprows=2, usecols=cols_to_use)
     data = data
     time = np.arange(0,len(data)*time_interval,time_interval)
@@ -443,7 +443,6 @@ def show_avg_period_either_side_of_max_displacement(period,at_time,t_of_max,ss,e
     period_before_max = period[0:point_to_go_to+1]
     start_plot = at_time[0]
     end_plot = at_time[point_to_go_to]
-    title = "please fucking work"
     at_time_before_max = at_time[0:point_to_go_to+1]
     period_after_max = period[point_to_go_to:-1]
     at_time_after_max = at_time[point_to_go_to:-1]
@@ -491,7 +490,7 @@ def show_avg_period_either_side_of_max_displacement(period,at_time,t_of_max,ss,e
 def main():
     
         
-    test_no = 11
+    test_no = 1
     build_heights = [0,32.9,32.9,20,20,32.9,2.4,2.4,2.4,25.4,25.4,25.4,25.4,25.4,25.4,27.5,27.5,27.5,27.5,27.5,27.5,10.4,10.4,10.4,1.1,1.1,1.8,1.8,2.9,2.9,2.9,2.9,2.9,2.9,2.9]
     """This script runs everything that needs be done
     changes can be made here and parameters adjusted as required,
@@ -543,7 +542,8 @@ def main():
     
     """tHIS threshold is mostly 0.2 meaning the printed plots will not plot until acc exceeds 20% of the peak"""
     
-    threshold = 0.1
+    threshold = 0.2
+
     
     start_plot, end_plot = determine_start_and_end_plot(ACC_top_filtered, time, threshold)
     standard = 10
@@ -551,8 +551,8 @@ def main():
     standard = 2
     disp_lim = determine_limits_to_show_in_plot(DISP_relative,standard)
     
-    """Plotting the neccessary plots here we go"""
-    start_plot = 8
+    """Plotting the neccessary plots here"""
+    
     """Overall accelleration records"""
     title = title
     """This plots the ground acceleration"""
@@ -576,9 +576,7 @@ def main():
     intercept_times = find_changes_in_acc_dir(data_to_use,t_to_use)
     
     intercept_times = list(intercept_times)
-    
-    intercept_times = [37.915000000000006, 37.295, 36.614999999999995, 35.915000000000006, 35.30500000000001, 34.695, 33.894999999999996, 33.475, 33.385000000000005, 33.235, 32.975, 32.254999999999995, 31.955, 31.875, 31.765, 31.585, 30.685000000000002, 29.995, 28.935000000000002, 27.995, 26.255000000000003, 25.505000000000003, 24.825000000000003, 24.315, 23.625, 23.005000000000003, 22.405, 21.825000000000003, 21.095, 20.465, 19.955, 19.215, 18.025, 16.925, 15.555, 14.875, 14.344999999999999, 13.545000000000002, 12.635000000000002, 11.9, 11.89, 11.045000000000002, 10.21, 10.2, 9.455000000000002, 8.485]
-    
+      
     
     t_p_of_build,at_time = find_changing_time_period(intercept_times)
     avg_period, time_point = averaging_period(t_p_of_build,intercept_times)
@@ -587,8 +585,8 @@ def main():
     # order = 2
     # polynomial(t_p_of_build,at_time,start_plot,end_plot,title,order)
     
-    show_avg_period_either_side_of_max_displacement(t_p_of_build,at_time,t_of_max,start_plot,end_plot)
-    # show_avg_period_either_side_of_max_displacement(avg_period,time_point,t_of_max,start_plot,end_plot)
+    # show_avg_period_either_side_of_max_displacement(t_p_of_build,at_time,t_of_max,start_plot,end_plot)
+    show_avg_period_either_side_of_max_displacement(avg_period,time_point,t_of_max,start_plot,end_plot)
     print("The peak displacement is {0:.0f}cm and occurs at t = {1}s".format(max_disp*build_heights[test_no],t_of_max))
     print("The peak drift ratio is {0:.1f}% and occurs at t = {1}s".format(max_disp,t_of_max))
     print(title)
